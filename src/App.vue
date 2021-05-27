@@ -1,40 +1,24 @@
 <template>
   <div id="app">
-    <div class="nav">
-      <router-link to="/">Home</router-link>|<router-link to="/about"
-        >About</router-link
-      >
-    </div>
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top">ChatRoom</a>
+            <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><router-link to="/">Home</router-link></li>
+                    <li class="nav-item mx-0 mx-lg-1"><router-link to="/general">General</router-link></li>
+                    <li class="nav-item mx-0 mx-lg-1"><router-link to="/about">About</router-link></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <router-view />
   </div>
 </template>
-
-<style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
-:root {
-  --font: Roboto, sans-serif;
-  --textColor: #374961;
-  --linkActiveColor: #41b783;
-}
-#app {
-  font-family: var(--font);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: var(--textColor);
-  .logo {
-    width: 20%;
-  }
-}
-.nav {
-  padding: 30px 0 100px 0;
-  a {
-    font-weight: 500;
-    color: var(--textColor);
-    margin: 0 5px;
-  }
-  a.router-link-exact-active {
-    color: var(--linkActiveColor);
-  }
-}
+<style>
+@import './assets/scss/app.scss';
 </style>

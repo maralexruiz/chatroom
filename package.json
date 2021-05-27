@@ -16,6 +16,9 @@
   "author": "Marcial Alejandro Ruiz Inocencio",
   "license": "MIT",
   "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "bootstrap": "^5.0.1",
+    "bootstrap-vue": "^2.21.2",
     "core-js": "^3.13.0",
     "vue": "^2.6.12",
     "vue-router": "^3.5.1",
