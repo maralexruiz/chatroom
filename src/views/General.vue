@@ -1,6 +1,9 @@
 <template>
-  <div class="masthead bg-primary">
-    <Chat title="General"></Chat>
+  <div class="page-section">
+    <Chat
+      title="General"
+      description="General purpose chat"
+      ></Chat>
   </div>
 </template>
 <script>

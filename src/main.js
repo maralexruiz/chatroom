@@ -17,4 +17,4 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
-import './assets/js/scripts.js'
+import './assets/js/bs-scripts.js'
