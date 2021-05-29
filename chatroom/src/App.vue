@@ -10,8 +10,8 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item mx-0 mx-lg-1"><router-link to="/general" class="nav-link py-3 px-0 px-lg-3 rounded">General</router-link></li>
-                    <li class="nav-item mx-0 mx-lg-1"><router-link to="/general" class="nav-link py-3 px-0 px-lg-3 rounded">Random</router-link></li>
-                    <li class="nav-item mx-0 mx-lg-1"><router-link to="/about" class="nav-link py-3 px-0 px-lg-3 rounded">Announcements</router-link></li>
+                    <li class="nav-item mx-0 mx-lg-1"><router-link to="/random" class="nav-link py-3 px-0 px-lg-3 rounded">Random</router-link></li>
+                    <li class="nav-item mx-0 mx-lg-1"><router-link to="/announcements" class="nav-link py-3 px-0 px-lg-3 rounded">Announcements</router-link></li>
                 </ul>
             </div>
         </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="page-section">
     <Chat
-      title="General"
-      description="General purpose chat"
+      title="Random"
+      description="Random stuff"
       ></Chat>
   </div>
 </template>
@@ -10,7 +10,7 @@
 import Chat from '../components/Chat.vue'
 
 export default {
-  name: 'App',
+  name: 'Random',
   components: {
     Chat
   }

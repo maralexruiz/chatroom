@@ -3,7 +3,7 @@
 		<br>
 		<div class="container">
 			<div class="row text-center">
-				<h3 class="section-heading text-uppercase">Chat {{title}}</h3>
+				<h3 class="section-heading text-uppercase">{{title}} Chat</h3>
 				<p class="section-subheading text-muted">{{description}}</p>
 			</div>
 			<div class="row text-center">
@@ -43,7 +43,7 @@
 			<div class="row ">
 				<div class="form-group">
 					<!--<label for="newEntry"></label>-->
-					<textarea class="form-control" ref="newEntry" id="newEntry" rows="2"></textarea>
+					<textarea class="form-control" ref="newEntry"  placeholder="Say something!" id="newEntry" rows="2"></textarea>
 				</div>
 			</div>
 			<br>
@@ -126,7 +126,8 @@ export default {
 				sessionid: "12345",
 				username: "Marcial Alejandro"
 			}
-		]}
+		]
+		}
 	},
 	beforeMount() {
 		this.username = sessionStorage.username ? sessionStorage.username : 'Anonymous';

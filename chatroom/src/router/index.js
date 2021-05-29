@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import General from "../views/General.vue"
+import Random from "../views/Random.vue"
+import Announcements from "../views/Announcements.vue"
 
 Vue.use(VueRouter);
 
@@ -15,6 +17,16 @@ const routes = [
     path: "/general",
     name: "General",
     component: General,
+  },
+  {
+    path: "/random",
+    name: "Random",
+    component: Random,
+  },
+  {
+    path: "/announcements",
+    name: "Announcements",
+    component: Announcements,
   },
   {
     path: "/about",
