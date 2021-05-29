@@ -1,6 +1,7 @@
 <template>
   <div class="page-section">
     <Chat
+      id=323
       title="Announcements"
       description="Announcements purpose chat"
     />

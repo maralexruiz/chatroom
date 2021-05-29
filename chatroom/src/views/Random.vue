@@ -1,6 +1,7 @@
 <template>
   <div class="page-section">
     <Chat
+      id=322
       title="Random"
       description="Random stuff"
       ></Chat>

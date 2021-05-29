@@ -30,12 +30,13 @@
 					<div class="col-12 inner-chatbox" id="inner-chatbox">
 						<ChatMessage
 						v-for="message in messages"
-						v-bind:key="message.id"
+						v-bind:key=message._id
+						v-bind:id=message._id
 						v-bind:date="message.date"
-						v-bind:msgbody="message.msgbody"
-						v-bind:userid="message.userid"
-						v-bind:sessionid="message.sessionid"
-						v-bind:username="message.username"
+						v-bind:msgbody="message.message"
+						v-bind:userid="message.user._id"
+						v-bind:sessionid="userid"
+						v-bind:username="message.user.name"
 						></ChatMessage>
 					</div>
 				</div> 
@@ -66,6 +67,7 @@ export default {
 		ChatMessage
 	},
 	props: {
+		id: String,
 		title: String,
 		description: String
 	},
@@ -86,7 +88,7 @@ export default {
 	},
 	mounted () {
 		axios
-		.get('http://localhost:3000/messages')
+		.get('http://localhost:3000/chats/' + this.id)
 		.then(response => (this.messages = response.data))
 	}
 }

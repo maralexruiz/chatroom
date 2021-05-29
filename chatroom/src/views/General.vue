@@ -1,6 +1,7 @@
 <template>
   <div class="page-section">
     <Chat
+      id="321"
       title="General"
       description="General purpose chat"
       ></Chat>

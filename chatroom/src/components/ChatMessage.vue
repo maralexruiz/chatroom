@@ -9,6 +9,7 @@
 export default {
     name: "ChatMessage",
     props: {
+        id: String,
         userid: String,
         sessionid: String,
         date: String,
