@@ -1,91 +1,127 @@
-var express = require("express"),
+
+
+let express = require("express"),
     cors = require('cors'),
+    // utils = require('./utils'),
+    
     app = express(),
     methodOverride = require("method-override");
-    // mongoose = require('mongoose');
+    mongoose = require('mongoose');
 
+require('./models/chats');
+require('./models/users');
+ChatsCtrl = require('./controllers/chats');
+
+const mongoDB = 'mongodb://localhost/chatroom';
+const Users = mongoose.model('users');
+const Chats = mongoose.model('chats');
+
+
+// Load Express extras.
 app.use(express.urlencoded());
 app.use(express.json());
 app.use(methodOverride());
 app.use(cors());
 
-var router = express.Router();
+let router = express.Router();
 
 router.get('/', function(req, res) {
-res.send("Hello World!");
+    res.send("API ChatRoom");
 });
-var hardcoded_messages = [
-    {
-        id: 1,
-        date: "2007-11-03T13:18:05",
-        msgbody: "Non irure velit sint id Lorem sunt excepteur occaecat est aliqua veniam exercitation commodo.",
-        userid: "12345",
-        sessionid: "123456",
-        username: "Antonio Martinez"
-    },
-    {
-        id: 2,
-        date: "2007-11-03T13:18:05",
-        msgbody: "Dolore ea sit non ex mollit.",
-        userid: "12345",
-        sessionid: "12345",
-        username: "Marcial Alejandro"
-    },
-    {
-        id: 3,
-        date: "2007-11-03T13:18:05",
-        msgbody: "Sunt Lorem aliqua anim mollit eiusmod ea occaecat laboris.",
-        userid: "12345",
-        sessionid: "123456",
-        username: "Antonio Martinez"
-    },
-    {
-        id: 4,
-        date: "2007-11-03T13:18:05",
-        msgbody: "Elit officia sit mollit irure pariatur enim.",
-        userid: "12345",
-        sessionid: "12345",
-        username: "Marcial Alejandro"
-    },
-    {
-        id: 5,
-        date: "2007-11-03T13:18:05",
-        msgbody: "Eiusmod culpa officia amet fugiat sint et commodo et et.",
-        userid: "12345",
-        sessionid: "123405",
-        username: "Marco Antonio"
-    },
-    {
-        id: 6,
-        date: "2007-11-03T13:18:05",
-        msgbody: "Aute anim nisi anim commodo sint reprehenderit.",
-        userid: "12345",
-        sessionid: "12345",
-        username: "Marcial Alejandro"
-    }
-]
 
-app.route('/messages')
-    .all(function (req, res, next) {
-    // runs for all HTTP verbs first
-    // think of it as route specific middleware!
-    next()
-    })
+try {
+    const admin = {
+            _id: new mongoose.Types.ObjectId("60b280c5fd84b729ac36234e"),
+            name: "Admin"
+        },
+        chats = [
+            {
+                _id: new mongoose.Types.ObjectId("60b280c5fd84b729ac36234f"),
+                chatId: 321,
+                // userId: String(admin._id),
+                message: "Welcome to General!",
+                user: admin._id
+            },{
+                _id: new mongoose.Types.ObjectId("60b2812fb1b4b14154d69b5f"),
+                chatId: 322,
+                // userId: String(admin._id),
+                message: "Welcome to Random! Share your mames.",
+                user: admin._id
+            },{
+                _id: new mongoose.Types.ObjectId("60b2813897a85129801b39ae"),
+                chatId: 323,
+                // userId: String(admin._id),
+                message: "Welcome to Announcements, Keep an eye in this one!.",
+                user: admin._id
+            }
+        ];
+
+    Users.findById({_id: admin['_id']}, function(err, user) {
+        if(err) console.log(err);
+        console.log("User:" + String(user));
+        if (!user) {
+            Users.create(admin, function (err, admin) {
+                if (err) return console.log(err);
+                console.log("Created admin");
+            });
+        }
+    });
+
+    for (let i = 0; i < chats.length; i++) {
+        Chats.findById({_id: chats[i]['_id']}, function(err, chat) {
+            if(err) console.log(err);
+            console.log("Chat:" + String(chat));
+            if (!chat) {
+                Chats.create(chats[i], function (err, chat) {
+                    if (err) return console.log(err);
+                    console.log("Created chat" + String(chat._id));
+                });
+            }
+        });
+    }
+    // if (chats.length > 0) {
+    //     Chats.insertMany(chats, function(err) {
+    //         console.log("Created chats");
+    //     });
+    // }
+    
+} catch (error) {
+    console.log("Error: " + error);
+}
+
+app.route('/users/:userid')
     .get(function (req, res, next) {
-        res.json(hardcoded_messages);
+        res.json({success: true});
     })
     .put(function (req, res, next) {
         next(new Error('not implemented'));
     })
     .post(function (req, res, next) {
-        next(new Error('not implemented'));
+        res.json({success:true});
     })
     .delete(function (req, res, next) {
         next(new Error('not implemented'));
     });
 
+app.route('/chats/:id')
+    .get(ChatsCtrl.findById)
+    .put(function (req, res, next) {
+        next(new Error('not implemented'));
+    })
+    .post(function (req, res, next) {
+        res.json({success:true});
+    })
+    .delete(function (req, res, next) {
+        next(new Error('not implemented'));
+    });
 app.use(router);
 
-app.listen(3000, () => {
-  console.log("Node server running on http://localhost:3000");
+// DB Connection
+mongoose.connect(mongoDB,  {useNewUrlParser: true, useUnifiedTopology: true}, function(err, res) {
+  if(err) {
+    console.log('ERROR: connecting to Database. ' + err);
+  }
+  app.listen(3000, function() {
+    console.log("Node server running on http://localhost:3000");
+  });
 });
