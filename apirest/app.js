@@ -11,6 +11,7 @@ let express = require("express"),
 require('./models/chats');
 require('./models/users');
 ChatsCtrl = require('./controllers/chats');
+UsersCtrl = require('./controllers/users');
 
 const mongoDB = 'mongodb://localhost/chatroom';
 const Users = mongoose.model('users');
@@ -89,31 +90,16 @@ try {
     console.log("Error: " + error);
 }
 
-app.route('/users/:userid')
-    .get(function (req, res, next) {
-        res.json({success: true});
-    })
-    .put(function (req, res, next) {
-        next(new Error('not implemented'));
-    })
-    .post(function (req, res, next) {
-        res.json({success:true});
-    })
-    .delete(function (req, res, next) {
-        next(new Error('not implemented'));
-    });
+app.route('/users/')
+    .post(UsersCtrl.addUser);
+
+app.route('/users/:id')
+    .get(UsersCtrl.findById)
+    .put(UsersCtrl.UpdateUser);
 
 app.route('/chats/:id')
     .get(ChatsCtrl.findById)
-    .put(function (req, res, next) {
-        next(new Error('not implemented'));
-    })
-    .post(function (req, res, next) {
-        res.json({success:true});
-    })
-    .delete(function (req, res, next) {
-        next(new Error('not implemented'));
-    });
+    .post(ChatsCtrl.addChatMessage);
 app.use(router);
 
 // DB Connection
