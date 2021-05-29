@@ -58,7 +58,8 @@
 </template>
 
 <script>
-import ChatMessage from './ChatMessage.vue'
+import ChatMessage from './ChatMessage.vue';
+import axios from "axios";
 export default {
 	name: "Chat",
 	components: {
@@ -76,62 +77,17 @@ export default {
 			}
 		}
 	},
-	data() {
-		return { messages:[
-			{
-				id: 1,
-				date: "2007-11-03T13:18:05",
-				msgbody: "Non irure velit sint id Lorem sunt excepteur occaecat est aliqua veniam exercitation commodo.",
-				userid: "12345",
-				sessionid: "123456",
-				username: "Antonio Martinez"
-			},
-			{
-				id: 2,
-				date: "2007-11-03T13:18:05",
-				msgbody: "Dolore ea sit non ex mollit.",
-				userid: "12345",
-				sessionid: "12345",
-				username: "Marcial Alejandro"
-			},
-			{
-				id: 3,
-				date: "2007-11-03T13:18:05",
-				msgbody: "Sunt Lorem aliqua anim mollit eiusmod ea occaecat laboris.",
-				userid: "12345",
-				sessionid: "123456",
-				username: "Antonio Martinez"
-			},
-			{
-				id: 4,
-				date: "2007-11-03T13:18:05",
-				msgbody: "Elit officia sit mollit irure pariatur enim.",
-				userid: "12345",
-				sessionid: "12345",
-				username: "Marcial Alejandro"
-			},
-			{
-				id: 5,
-				date: "2007-11-03T13:18:05",
-				msgbody: "Eiusmod culpa officia amet fugiat sint et commodo et et.",
-				userid: "12345",
-				sessionid: "123405",
-				username: "Marco Antonio"
-			},
-			{
-				id: 6,
-				date: "2007-11-03T13:18:05",
-				msgbody: "Aute anim nisi anim commodo sint reprehenderit.",
-				userid: "12345",
-				sessionid: "12345",
-				username: "Marcial Alejandro"
-			}
-		]
-		}
-	},
 	beforeMount() {
 		this.username = sessionStorage.username ? sessionStorage.username : 'Anonymous';
 		this.userid = sessionStorage.userid.slice(0, 8);
+	},
+	data() {
+		return { messages: []}
+	},
+	mounted () {
+		axios
+		.get('http://localhost:3000/messages')
+		.then(response => (this.messages = response.data))
 	}
 }
 </script>
@@ -141,7 +97,7 @@ div.chatbox {
 	background-color: #e9ecef;
 	overflow: auto;
 	margin: 1em 0 1em 0;
-	border-radius: 25px;
+	border-radius: 10px;
 	padding-top: 0.5em 0 0.5em 0;
 }
 
