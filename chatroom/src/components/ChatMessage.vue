@@ -1,6 +1,6 @@
 <template>
     <div v-bind:class="(userid == sessionid)?'alert alert-info text-sm-left':'alert alert-secondary'">
-        <p class="msg-date">{{date}}<strong class="msg-username">{{ userid == sessionid?'You':username}}</strong> </p>
+        <p class="msg-date">{{date}}<strong class="msg-username">{{userid==sessionid?'You':username?username:'Anonymous'}}</strong> </p>
         <p class="msg-body">{{msgbody}}</p>
     </div>
 </template>

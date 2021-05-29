@@ -14,14 +14,14 @@
 				</div>
 				<div class="col-auto">
 					<label for="UserID" class="visually-hidden">UserID</label>
-					<input type="text" readonly class="form-control-plaintext" id="UserID" v-bind:value="userid">
+					<input type="text" readonly class="form-control-plaintext" id="UserID" v-bind:value="useridsmall">
 				</div>
 				<div class="col-auto">
-					<label for="usernameInput" class="visually-hidden">Password</label>
-					<input type="password" class="form-control" id="usernameInput" placeholder="Username">
+					<label for="updateUserName" class="visually-hidden">Username</label>
+					<input type="text" class="form-control" id="updateUserName" ref="updateUserName"  placeholder="Username">
 				</div>
 				<div class="col-auto">
-					<button type="submit" class="btn btn-primary mb-3" id="changeUsername">Change Username</button>
+					<button type="submit" v-on:click="updateName($event)" class="btn btn-primary mb-3" id="changeUsername">Change Username</button>
 				</div>
 				</form>
 			</div>
@@ -43,8 +43,8 @@
 			</div>
 			<div class="row ">
 				<div class="form-group">
-					<!--<label for="newEntry"></label>-->
-					<textarea class="form-control" ref="newEntry"  placeholder="Say something!" id="newEntry" rows="2"></textarea>
+					<!--<label for="newEntryMessage"></label>-->
+					<textarea class="form-control" ref="newEntryMessage"  placeholder="Say something!" id="newEntryMessage" rows="2"></textarea>
 				</div>
 			</div>
 			<br>
@@ -73,15 +73,51 @@ export default {
 	},
 	methods: {
 		sendMessage() {
-			let entry = this.$refs.newEntry.value;
-			if (entry && entry.trim().length > 0) {
-				console.log(entry);
+			let entryMessage = this.$refs.newEntryMessage.value;
+			if (entryMessage && entryMessage.trim().length > 0) {
+				const body = {
+					userid: sessionStorage.userid,
+					message: entryMessage
+				}
+				axios
+				.post('http://localhost:3000/chats/' + this.id, body)
+				.then(function (response) {
+					console.log(response);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
 			}
+		},
+		updateName(event) {
+			if (event) event.preventDefault();
+			let body = {username: this.$refs.updateUserName.value};
+			let self = this;
+			axios
+			.put('http://localhost:3000/users/' + this.userid, body)
+			.then(function (response) {
+				console.log(response);
+				sessionStorage.username = response.data.name;
+				document.getElementById("userName").value =  response.data.name;
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
 		}
 	},
-	beforeMount() {
-		this.username = sessionStorage.username ? sessionStorage.username : 'Anonymous';
-		this.userid = sessionStorage.userid.slice(0, 8);
+	beforeCreate() {
+		/** If not SeassonStorage we redirect to Home. */
+		this.username = "";
+		this.userid = "";
+		this.useridsmall = "";
+		if (sessionStorage.userid) {
+			this.username = sessionStorage.username ? sessionStorage.username : 'Anonymous';
+			this.userid = sessionStorage.userid;
+			this.useridsmall = sessionStorage.userid.slice(0, 8);
+		} else {
+			// Necesary for create user(session);
+			window.location.href = '/';
+		}
 	},
 	data() {
 		return { messages: []}

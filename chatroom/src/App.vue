@@ -21,19 +21,31 @@
 </template>
 <script>
 
-function create_UUID(){
-    var dt = new Date().getTime();
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (dt + Math.random()*16)%16 | 0;
-        dt = Math.floor(dt/16);
-        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-    });
-    return uuid;
-}
+
+// Mongo db Generatior
+// var mongoObjectId = function () {
+//     var timestamp = (new Date().getTime() / 1000 | 0).toString(16);
+//     return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function() {
+//         return (Math.random() * 16 | 0).toString(16);
+//     }).toLowerCase();
+// };
+import axios from "axios";
 
 export default {
     beforeCreate() {
-        if (!sessionStorage.userid) sessionStorage.setItem('userid', create_UUID());
+        // if (!sessionStorage.userid) sessionStorage.setItem('userid', mongoObjectId());
+        /** HERE SHOULD BE START A LOADER OR A SPLASH SCREEN */
+        if (!sessionStorage.userid) {
+            axios
+            .post('http://localhost:3000/users/', {})
+            .then(function (response) {
+                console.log(response);
+                sessionStorage.setItem('userid', response.data._id)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 }
 </script>
