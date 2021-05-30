@@ -6,11 +6,12 @@ This is the challege made by m.alejandro.ruiz@outlook.com for Hey!
 
 ## Requirements
 
-**Software**:
+**Software:**
+
 - node
 - mongodb
 
-**Ports**
+**Ports:**
 
 We gona need the next ports for this proyect to run. 
 - 3000
@@ -20,13 +21,14 @@ We gona need the next ports for this proyect to run.
 ## Instructions
 
 **MongoDB**
+
 We need to start a mongoDB server. We will create a collection called chatroom.
 
 __mongodb://localhost/chatroom__
 
 **Api REST**
 
-Open a term and go to apirest folder. Then run the follow commands.
+Open a term and go to __apirest__ folder. Then run the follow commands.
 
 ```bash
 npm install
@@ -37,7 +39,7 @@ This will start the backend.
 
 **Socket.io**
 
-Open a new term and do the same for the socket.io service in the folder socketio-server
+Open a new term and do the same for the socket.io service in the folder __socketio-server__
 
 ```bash
 npm install
@@ -46,7 +48,7 @@ npm run start
 
 
 **Chatroom**
-Finally go to Chatroom will. Same here, new term go to chatroom folder.
+Finally go to Chatroom will. Same here, new term go to __chatroom__ folder.
 
 
 ```bash
@@ -54,4 +56,4 @@ npm install
 npm run start
 ```
 
-If everything is OK, then go to [ChatRoom](http://localhost:8080/)
+If everything is OK, then go to [http://localhost:8080/](http://localhost:8080/)
