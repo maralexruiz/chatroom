@@ -21,9 +21,10 @@
     "bootstrap": "^5.0.1",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.13.0",
+    "socker.io": "0.0.0-alpha-beta",
+    "socket.io-client": "^4.1.2",
     "vue": "^2.6.12",
-    "vue-router": "^3.5.1",
-    "vue-socket.io": "^3.0.10"
+    "vue-router": "^3.5.1"
   },
   "browserslist": [
     "> 1%",

@@ -60,11 +60,20 @@
 
 <script>
 import ChatMessage from './ChatMessage.vue';
-import axios from "axios";
+import axios from 'axios';
+import { io } from "socket.io-client";
+
+
 export default {
 	name: "Chat",
 	components: {
 		ChatMessage
+	},
+	data() {
+		return {
+			messages: [],
+			socket: io("http://localhost:3030")
+		}
 	},
 	props: {
 		id: String,
@@ -72,33 +81,48 @@ export default {
 		description: String
 	},
 	methods: {
+		socketMessage(data) {
+			console.log(data);
+			if (this.id == data.chatId) {
+				this.messages.push(data);
+				this.scrollToBottom()
+			}
+		},
 		sendMessage() {
 			let entryMessage = this.$refs.newEntryMessage.value;
 			if (entryMessage && entryMessage.trim().length > 0) {
+				document.getElementById("newEntryMessage").value = "";
 				const body = {
-					userid: sessionStorage.userid,
-					message: entryMessage
-				}
+						userid: sessionStorage.userid,
+						message: entryMessage
+					},
+					self = this;
 				axios
 				.post('http://localhost:3000/chats/' + this.id, body)
 				.then(function (response) {
 					console.log(response);
+					self.socket.emit("chat-message", response.data);
 				})
 				.catch(function (error) {
 					console.log(error);
 				});
 			}
 		},
+		scrollToBottom(){
+			setTimeout(function(){
+				var chatbox = document.getElementById("chatbox");
+				chatbox.scrollTop = chatbox.scrollHeight;
+			}, 500);
+		},
 		updateName(event) {
 			if (event) event.preventDefault();
 			let body = {username: this.$refs.updateUserName.value};
-			let self = this;
 			axios
 			.put('http://localhost:3000/users/' + this.userid, body)
 			.then(function (response) {
 				console.log(response);
 				sessionStorage.username = response.data.name;
-				document.getElementById("userName").value =  response.data.name;
+				document.getElementById("userName").value = response.data.name;
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -119,13 +143,17 @@ export default {
 			window.location.href = '/';
 		}
 	},
-	data() {
-		return { messages: []}
-	},
 	mounted () {
 		axios
 		.get('http://localhost:3000/chats/' + this.id)
-		.then(response => (this.messages = response.data))
+		.then(response => {
+			this.messages = response.data;
+			this.scrollToBottom();
+		});
+		
+		this.socket.on("chat-message", (data) => {
+			this.socketMessage(data);
+		});
 	}
 }
 </script>
