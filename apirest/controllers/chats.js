@@ -23,6 +23,8 @@ exports.addChatMessage = function(req, res) {
     Chats.create(query, function (err, chat) {
         if (err) return console.log(err);
         console.log("Created chat");
-        res.status(200).jsonp(chat);
+        Users.populate(chat, {path: "user"},function(err, chat){
+            res.status(200).send(chat);
+        }); 
     });
 };
